@@ -1,0 +1,8 @@
+        Car nissan2 = nissan;
+
+        nissan2.setColor("Yellow");
+        nissan.setColor("Orange");
+        nissan2.setColor("Blue");
+        nissan.setColor("Purple");
+        nissan2.setColor("Fuchsia");
+        nissan.setColor("Beige");
