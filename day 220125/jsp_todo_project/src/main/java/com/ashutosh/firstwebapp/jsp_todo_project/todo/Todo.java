@@ -2,13 +2,23 @@ package com.ashutosh.firstwebapp.jsp_todo_project.todo;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 
 //Database (My Sql)
 //Static List of 
 
+@Entity
+@Table(name = "todo")
 public class Todo {
 
+	
+	public Todo(){
+		
+	}
 	public Todo(int id, String username, String description, LocalDate targetDate, boolean done) {
 		super();
 		this.id = id;
@@ -18,6 +28,8 @@ public class Todo {
 		this.done = done;
 	}
 
+	@Id
+	@GeneratedValue
 	private int id;
 	private String username;
 	@Size(min=10, message = "Enter atleast 10 characters")
