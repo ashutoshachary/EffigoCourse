@@ -1,0 +1,11 @@
+.CounterBtn{
+    font-size: 30px;
+    color: wheat;
+    background-color: gray;
+    border-radius: 15px;
+    border: none;
+}
+.count{
+    font-size: 80px;
+    padding: 20px;
+}
