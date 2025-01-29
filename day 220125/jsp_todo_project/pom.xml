@@ -50,12 +50,13 @@
 		
 		-->
 		
-		
+		<!-- 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version>
 		</dependency>
+		-->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,6 +71,12 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+    		<groupId>org.postgresql</groupId>
+    		<artifactId>postgresql</artifactId>
+    		<version>42.7.5</version>
+    		
+    	</dependency>
 		
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>

@@ -3,6 +3,7 @@ import './TodoApp.css'
 import { useState } from "react"
 import { BrowserRouter, Routes, Route , useNavigate, useParams, Link} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { useAuth } from "./security/AuthContext"
 
 export default function LoginComponent() {
     const [username, setUsername] = useState('ashutosh')
@@ -12,6 +13,7 @@ export default function LoginComponent() {
     const [errorMessage, setErrorMessage] = useState(false)
 
     const navigate = useNavigate();
+    const authContext = useAuth()
 
     function handelUsernameChange(e) {
         setUsername(e.target.value)
@@ -22,16 +24,11 @@ export default function LoginComponent() {
 
     function handelSubmit() {
 
-        if (username === 'ashutosh' && password === 'dummy'){
-            console.log('Login Successfull')
-            setSucessMessage(true)
-            setErrorMessage(false)
+        if (authContext.login(username,password)){
             navigate(`/welcome/${username}`)
         }
         else{
-            console.log('Invalid Credentials')
             setErrorMessage(true)
-            setSucessMessage(false)
         }
     }
 
