@@ -9,40 +9,35 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employees/{employeeId}/todos")
 @RequiredArgsConstructor
 public class TodoController {
-    
-    private final TodoRepository todoRepository;
-    @Autowired  // Inject TodoRepository via constructor
-    public TodoController(TodoRepository todoRepository) {
-        this.todoRepository = todoRepository;
-    }
-    
+    @Autowired
+    private TodoRepository todoRepository;
+
     @GetMapping
     public List<Todo> getEmployeeTodos(@PathVariable String employeeId) {
         return todoRepository.findByEmployeeId(employeeId);
     }
     
     @PostMapping
-    public Todo createTodo(@PathVariable String employeeId, @Valid @RequestBody Todo todo) {
+    public ResponseEntity<Todo> createTodo(@PathVariable String employeeId, @Valid @RequestBody Todo todo) {
         todo.setEmployeeId(employeeId);
-        return todoRepository.save(todo);
+        return ResponseEntity.ok(todoRepository.save(todo));
     }
     
     @GetMapping("/{todoId}")
     public ResponseEntity<Todo> getTodo(@PathVariable String employeeId, @PathVariable String todoId) {
-        return (ResponseEntity<Todo>) todoRepository.findById(todoId)
-            .map(todo -> {
-                if (todo.getEmployeeId().equals(employeeId)) {
-                    return ResponseEntity.ok(todo);
-                }
-                return ResponseEntity.notFound().build();
-            })
-            .orElse(ResponseEntity.notFound().build());
+        Optional<Todo> optionalTodo = todoRepository.findById(todoId);
+        if (optionalTodo.isPresent() && optionalTodo.get().getEmployeeId().equals(employeeId)) {
+            return ResponseEntity.ok(optionalTodo.get());
+        }
+        return ResponseEntity.notFound().build();
     }
     
     @PutMapping("/{todoId}")
@@ -50,11 +45,9 @@ public class TodoController {
             @PathVariable String employeeId,
             @PathVariable String todoId,
             @Valid @RequestBody Todo todo) {
-        return (ResponseEntity<Todo>) todoRepository.findById(todoId)
+        return todoRepository.findById(todoId)
+            .filter(existingTodo -> existingTodo.getEmployeeId().equals(employeeId))
             .map(existingTodo -> {
-                if (!existingTodo.getEmployeeId().equals(employeeId)) {
-                    return ResponseEntity.notFound().build();
-                }
                 todo.setId(todoId);
                 todo.setEmployeeId(employeeId);
                 return ResponseEntity.ok(todoRepository.save(todo));
@@ -63,14 +56,12 @@ public class TodoController {
     }
     
     @DeleteMapping("/{todoId}")
-    public ResponseEntity<Void> deleteTodo(@PathVariable String employeeId, @PathVariable String todoId) {
+    public ResponseEntity<Object> deleteTodo(@PathVariable String employeeId, @PathVariable String todoId) {
         return todoRepository.findById(todoId)
+            .filter(todo -> todo.getEmployeeId().equals(employeeId))
             .map(todo -> {
-                if (todo.getEmployeeId().equals(employeeId)) {
-                    todoRepository.delete(todo);
-                    return ResponseEntity.ok().<Void>build();
-                }
-                return ResponseEntity.notFound().<Void>build();
+                todoRepository.delete(todo);
+                return ResponseEntity.ok().build();
             })
             .orElse(ResponseEntity.notFound().build());
     }

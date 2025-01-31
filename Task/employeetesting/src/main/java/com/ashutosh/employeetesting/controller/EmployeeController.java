@@ -4,12 +4,11 @@ import com.ashutosh.employeetesting.model.Employee;
 import com.ashutosh.employeetesting.repository.EmployeeRepository;
 
 import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -17,7 +16,6 @@ public class EmployeeController {
     
     private final EmployeeRepository employeeRepository;
 
-    @Autowired 
     public EmployeeController(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
@@ -28,8 +26,8 @@ public class EmployeeController {
     }
     
     @PostMapping
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
+        return ResponseEntity.ok(employeeRepository.save(employee));
     }
     
     @GetMapping("/{id}")
