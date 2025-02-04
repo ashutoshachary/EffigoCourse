@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.Email;
@@ -14,6 +15,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
+import java.util.List;
 
 //@Data
 //@NoArgsConstructor
@@ -28,7 +30,8 @@ public class Employee {
 			@NotBlank(message = "Address is required") String address,
 			@NotNull(message = "Gender is required") Boolean isMale,
 			@NotBlank(message = "Password is required") String password,
-			@Past(message = "Date of birth must be in the past") @NotNull(message = "Date of birth is required") LocalDate dateOfBirth) {
+			@Past(message = "Date of birth must be in the past") @NotNull(message = "Date of birth is required") LocalDate dateOfBirth,
+			List<String> checkBoxOptions) {
 		super();
 		this.id = id;
 		this.employeeName = employeeName;
@@ -41,6 +44,7 @@ public class Employee {
 		this.isMale = isMale;
 		this.password = password;
 		this.dateOfBirth = dateOfBirth;
+		this.checkBoxOptions = checkBoxOptions;
 	}
 
 	@Id
@@ -51,6 +55,7 @@ public class Employee {
     
     @Email(message = "Please provide a valid email address")
     @NotBlank(message = "Email is required")
+    @Indexed(unique = true)
     private String email;
     
     @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
@@ -76,8 +81,11 @@ public class Employee {
     @NotNull(message = "Date of birth is required")
     private LocalDate dateOfBirth;
     
+    private List<String> checkBoxOptions;
+    
    
 
+	
 	public String getId() {
 		return id;
 	}
@@ -144,12 +152,19 @@ public class Employee {
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+	public List<String> getCheckBoxOptions() {
+		return checkBoxOptions;
+	}
+	public void setCheckBoxOptions(List<String> checkBoxOptions) {
+		this.checkBoxOptions = checkBoxOptions;
+	}
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", employeeName=" + employeeName + ", email=" + email + ", phoneNumber="
 				+ phoneNumber + ", photoUrl=" + photoUrl + ", department=" + department + ", resumeUrl=" + resumeUrl
 				+ ", address=" + address + ", isMale=" + isMale + ", password=" + password + ", dateOfBirth="
-				+ dateOfBirth + "]";
+				+ dateOfBirth + ", checkBoxOptions=" + checkBoxOptions + "]";
 	}
+	
     
 }

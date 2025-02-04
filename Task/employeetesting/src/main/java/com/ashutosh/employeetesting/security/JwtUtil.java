@@ -1,12 +1,14 @@
 package com.ashutosh.employeetesting.security;
 
+
+import org.springframework.stereotype.Component;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component
+//@Component
 public class JwtUtil {
     private final String SECRET_KEY = "yourSecretKey";
 
