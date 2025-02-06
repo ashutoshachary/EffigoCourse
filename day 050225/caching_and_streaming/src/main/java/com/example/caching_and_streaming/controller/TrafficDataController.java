@@ -16,23 +16,20 @@ import java.util.List;
 @RequestMapping("/api/accidents")
 @CrossOrigin(origins = "http://localhost:5173")
 public class TrafficDataController {
-
+    
     @Autowired
     private TrafficDataService trafficDataService;
 
     @GetMapping("/country/{country}")
-    public ResponseEntity<List<TrafficAccident>> getByCountry(@PathVariable String country) throws CsvException {
+    public ResponseEntity<List<TrafficAccident>> getByCountry(
+            @PathVariable String country,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) throws CsvException {
         try {
-            return ResponseEntity.ok(trafficDataService.getAccidentsByCountry(country));
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/year/{year}")
-    public ResponseEntity<List<TrafficAccident>> getByYear(@PathVariable int year) throws CsvException {
-        try {
-            return ResponseEntity.ok(trafficDataService.getAccidentsByYear(year));
+            return ResponseEntity.ok(
+                trafficDataService.getAccidentsByCountryPaginated(country, page, size)
+            );
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();
         }

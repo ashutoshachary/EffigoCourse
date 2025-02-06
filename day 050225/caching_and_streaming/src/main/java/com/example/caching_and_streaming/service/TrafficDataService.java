@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -47,6 +48,18 @@ public class TrafficDataService {
                     throw new RuntimeException(e);
                 }
             });
+    }
+    @Cacheable("trafficData")
+    public List<TrafficAccident> getAccidentsByCountryPaginated(
+            String country, 
+            int page, 
+            int size
+    ) throws IOException, CsvException {
+        return streamData()
+            .filter(accident -> accident.getCountry().equals(country))
+            .skip((long) (page - 1) * size)
+            .limit(size)
+            .collect(Collectors.toList());
     }
 
 
