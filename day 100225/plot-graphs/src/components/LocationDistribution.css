@@ -1,0 +1,150 @@
+/* Card Container */
+.location-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  /* Card Header */
+  .location-card-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .location-card-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Card Content */
+  .location-card-content {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Chart Container */
+  .location-chart-container {
+    height: 1200px;
+    width: 100%;
+  }
+  
+  /* Loading and Error States */
+  .location-loading-container,
+  .location-error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+  }
+  
+  .location-error-container {
+    color: #dc3545;
+  }
+  
+  /* Tooltip Customization */
+  .recharts-tooltip-wrapper .recharts-default-tooltip {
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    padding: 10px !important;
+  }
+  
+  /* Chart Text Styles */
+  .recharts-text {
+
+    fill: #333;
+    font-size: 12px;
+  }
+  
+  .recharts-label {
+    fill: #666;
+    font-weight: 500;
+
+  }
+  
+  /* Bar Custom Styles */
+  .recharts-bar-rectangle {
+    fill: #8884d8;
+    margin:20px;
+  }
+  
+  .recharts-bar-rectangle:hover {
+    fill: #7673bf;
+  }
+  
+  /* Grid Lines */
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    stroke: #e0e0e0;
+    stroke-dasharray: 3 3;
+  }
+  
+  /* Axis Lines */
+  .recharts-xAxis line,
+  .recharts-yAxis line {
+    stroke: #ccc;
+  }
+  
+  /* Legend Styles */
+  .recharts-legend-wrapper {
+    padding: 10px;
+  }
+  
+  .recharts-legend-item {
+    padding: 0 10px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 1024px) {
+    .location-chart-container {
+      height: 500px;
+    }
+    
+    .location-card {
+      margin: 15px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .location-chart-container {
+      height: 400px;
+    }
+    
+    .location-card {
+      margin: 10px;
+    }
+    
+    .location-card-header {
+      padding: 15px;
+    }
+    
+    .location-card-content {
+      padding: 15px;
+    }
+    
+    .location-card-title {
+      font-size: 1.25rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .location-chart-container {
+      height: 300px;
+    }
+    
+    .location-card {
+      margin: 5px;
+    }
+    
+    .location-card-header,
+    .location-card-content {
+      padding: 10px;
+    }
+  }
+
+  
